@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <base href="/md/builder/new">
+  <title>Markdown Viewer</title>
+  <link rel="stylesheet" href="https://unpkg.com/picocss@1.5.6/dist/pico.min.css">
+  <style>
+    :root {
+      --background: #ffffff;
+      --text-color: #000000;
+    }
+
+    [data-theme="dark"] {
+      --background: #000000;
+      --text-color: #ffffff;
+    }
+
+    body {
+      background: var(--background);
+      color: var(--text-color);
+      transition: background 0.3s, color 0.3s;
+    }
+
+    #app {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    main {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    #input-container, #output-container {
+      flex: 1;
+    }
+
+    textarea {
+      width: 100%;
+      height: 300px;
+      resize: vertical;
+    }
+
+    #output-container {
+      padding: 1rem;
+      background: var(--background);
+      border: 1px solid #ddd;
+      overflow-y: auto;
+      max-height: 400px;
+    }
+
+    @media (min-width: 641px) {
+      main {
+        flex-direction: row;
+      }
+
+      textarea {
+        height: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <header>
+      <h1>Markdown Viewer</h1>
+      <button id="toggle-theme">Toggle Theme</button>
+    </header>
+    <main>
+      <div id="input-container">
+        <textarea id="markdown-input" placeholder="Paste Markdown here..."></textarea>
+      </div>
+      <div id="output-container">
+        <div id="html-output"></div>
+      </div>
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const markdownInput = document.getElementById("markdown-input");
+      const htmlOutput = document.getElementById("html-output");
+      const toggleTheme = document.getElementById("toggle-theme");
+
+      // Load initial theme from localStorage
+      const currentTheme = localStorage.getItem("theme") || "light";
+      document.body.setAttribute("data-theme", currentTheme);
+
+      // Handle Markdown input and rendering
+      markdownInput.addEventListener("input", () => {
+        const markdown = markdownInput.value;
+        htmlOutput.innerHTML = marked(markdown);
+      });
+
+      // Theme toggle
+      toggleTheme.addEventListener("click", () => {
+        const newTheme = document.body.getAttribute("data-theme") === "dark" ? "light" : "dark";
+        document.body.setAttribute("data-theme", newTheme);
+        localStorage.setItem("theme", newTheme);
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,4 @@
+<h3>System Info</h3>
+<pre>
+$(df -h | grep /$ && pwd ** ls -l )
+</pre>

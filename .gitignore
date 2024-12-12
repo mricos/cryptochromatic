@@ -1,0 +1,10 @@
+albums
+backup
+images
+old
+*.old
+*.aac
+*.wav
+*.mp3
+*.1
+node_modules

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mermaid Diagram Previewer</title>
+    <!-- Mermaid.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <!-- Optional: CodeMirror for syntax highlighting -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.9/lib/codemirror.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.9/lib/codemirror.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.9/mode/markdown/markdown.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0 20px;
+            background-color: #f4f4f9;
+        }
+        h1 {
+            text-align: center;
+        }
+        #editorContainer {
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            margin-bottom: 20px;
+        }
+        #diagramEditor {
+            height: 200px;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            resize: none;
+        }
+        #controls {
+            margin: 10px 0;
+        }
+        #controls button {
+            margin-right: 5px;
+        }
+        #savedDiagrams {
+            margin-top: 20px;
+        }
+        #savedDiagrams h2 {
+            margin-bottom: 10px;
+        }
+        #diagramList {
+            list-style: none;
+            padding: 0;
+        }
+        #diagramList li {
+            display: flex;
+            justify-content: space-between;
+            background: #fff;
+            padding: 10px;
+            margin-bottom: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        #diagramList li button {
+            margin-left: 5px;
+        }
+        #preview {
+            width: 100%;
+            padding: 20px;
+            background: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Mermaid Diagram Previewer</h1>
+    <div id="editorContainer">
+        <textarea id="diagramEditor" placeholder="Enter Mermaid syntax here...">graph TD
+A[Start] --> B{Decision}
+B -->|Yes| C[Do Task]
+B -->|No| D[End]</textarea>
+    </div>
+    <div id="controls">
+        <button onclick="renderDiagram()">Render Diagram</button>
+        <button onclick="saveDiagram()">Save Diagram</button>
+    </div>
+    <div id="preview"></div>
+    <div id="savedDiagrams">
+        <h2>Saved Diagrams</h2>
+        <ul id="diagramList"></ul>
+    </div>
+
+    <!-- Script placed at the end of the body -->
+    <script>
+        // Ensure the DOM is fully loaded before running the script
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize Mermaid
+            mermaid.initialize({ startOnLoad: false });
+
+            // Load saved diagrams from local storage
+            let diagrams = JSON.parse(localStorage.getItem('diagrams')) || {};
+
+            // Initialize CodeMirror for syntax highlighting (optional)
+            const editor = CodeMirror.fromTextArea(document.getElementById('diagramEditor'), {
+                mode: 'markdown',
+                lineNumbers: true,
+                lineWrapping: true
+            });
+
+            // Function to render the diagram
+            function renderDiagram() {
+                const input = editor.getValue().trim();
+                const preview = document.getElementById('preview');
+
+                // Clear previous diagram
+                preview.innerHTML = '';
+
+                // Create a container for the new diagram
+                const diagramContainer = document.createElement('div');
+                diagramContainer.className = 'mermaid';
+                diagramContainer.textContent = input; // Use textContent to avoid HTML parsing
+
+                // Append the container and render it
+                preview.appendChild(diagramContainer);
+
+                try {
+                    mermaid.init(undefined, diagramContainer);
+                } catch (err) {
+                    console.error('Mermaid rendering error:', err);
+                    // Extract the error message
+                    const errorMessage = err.str || err.message || 'Error rendering diagram. Check syntax.';
+                    // Escape the error message to prevent XSS attacks
+                    const escapedMessage = errorMessage.replace(/&/g, '&amp;')
+                                                       .replace(/</g, '&lt;')
+                                                       .replace(/>/g, '&gt;');
+                    // Display the error message in the preview area
+                    preview.innerHTML = `<p style='color: red; white-space: pre-wrap;'>${escapedMessage}</p>`;
+                }
+            }
+
+            // Function to save the diagram
+            function saveDiagram() {
+                const diagramContent = editor.getValue().trim();
+                if (!diagramContent) {
+                    alert('Diagram content is empty!');
+                    return;
+                }
+
+                const diagramName = prompt('Enter a name for the diagram:');
+                if (!diagramName) {
+                    return;
+                }
+
+                diagrams[diagramName] = {
+                    content: diagramContent,
+                    timestamp: new Date().toISOString()
+                };
+
+                localStorage.setItem('diagrams', JSON.stringify(diagrams));
+                alert(`Diagram "${diagramName}" saved!`);
+                updateDiagramList();
+            }
+
+            // Function to load a diagram into the editor
+            function loadDiagram(name) {
+                const diagram = diagrams[name];
+                if (diagram) {
+                    if (confirm(`Load diagram "${name}"? Unsaved changes will be lost.`)) {
+                        editor.setValue(diagram.content);
+                        renderDiagram();
+                    }
+                } else {
+                    alert('Diagram not found!');
+                }
+            }
+
+            // Function to delete a diagram
+            function deleteDiagram(name) {
+                if (confirm(`Are you sure you want to delete diagram "${name}"?`)) {
+                    delete diagrams[name];
+                    localStorage.setItem('diagrams', JSON.stringify(diagrams));
+                    updateDiagramList();
+                }
+            }
+
+            // Function to update the list of saved diagrams
+            function updateDiagramList() {
+                const diagramList = document.getElementById('diagramList');
+                diagramList.innerHTML = '';
+
+                if (Object.keys(diagrams).length === 0) {
+                    diagramList.innerHTML = '<p>No saved diagrams.</p>';
+                    return;
+                }
+
+                for (const name in diagrams) {
+                    const li = document.createElement('li');
+
+                    const nameSpan = document.createElement('span');
+                    nameSpan.textContent = name;
+
+                    const btnLoad = document.createElement('button');
+                    btnLoad.textContent = 'Load';
+                    btnLoad.onclick = () => loadDiagram(name);
+
+                    const btnDelete = document.createElement('button');
+                    btnDelete.textContent = 'Delete';
+                    btnDelete.onclick = () => deleteDiagram(name);
+
+                    li.appendChild(nameSpan);
+                    li.appendChild(btnLoad);
+                    li.appendChild(btnDelete);
+
+                    diagramList.appendChild(li);
+                }
+            }
+
+            // Attach functions to the window object so they can be called from HTML
+            window.renderDiagram = renderDiagram;
+            window.saveDiagram = saveDiagram;
+
+            // Initial rendering and list update
+            renderDiagram();
+            updateDiagramList();
+        });
+    </script>
+</body>
+</html>

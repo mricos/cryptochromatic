@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crypto Market Cap Chart</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <h1>Cryptocurrency Market Cap (2012-Present)</h1>
+  <canvas id="cryptoChart" width="800" height="400"></canvas>
+
+  <script>
+    // Example market cap data (in billions of USD)
+    const years = [2012, 2014, 2016, 2018, 2020, 2022, 2024];
+    const bitcoinCap = [0.1, 5, 16, 66, 355, 900, 1840]; // BTC market cap over time
+    const ethereumCap = [0, 0, 0, 16, 70, 250, 376.85]; // ETH market cap starts in 2015
+    const otherCap = [0.01, 0.2, 1.5, 10, 40, 400, 983.15]; // Other crypto caps
+
+    const ctx = document.getElementById('cryptoChart').getContext('2d');
+    const cryptoChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: years,
+        datasets: [
+          {
+            label: 'Bitcoin (BTC)',
+            data: bitcoinCap,
+            borderColor: 'rgba(255, 99, 132, 1)',
+            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+            fill: true,
+            tension: 0.4,
+          },
+          {
+            label: 'Ethereum (ETH)',
+            data: ethereumCap,
+            borderColor: 'rgba(54, 162, 235, 1)',
+            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+            fill: true,
+            tension: 0.4,
+          },
+          {
+            label: 'Other Cryptos',
+            data: otherCap,
+            borderColor: 'rgba(75, 192, 192, 1)',
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            fill: true,
+            tension: 0.4,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          title: {
+            display: true,
+            text: 'Cryptocurrency Market Capitalization (2012 - Present)',
+          },
+        },
+        scales: {
+          x: {
+            title: {
+              display: true,
+              text: 'Year',
+            },
+          },
+          y: {
+            title: {
+              display: true,
+              text: 'Market Cap (Billions USD)',
+            },
+            beginAtZero: true,
+          },
+        },
+      },
+    });
+  </script>
+</body>
+</html>

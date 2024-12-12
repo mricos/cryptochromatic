@@ -1,0 +1,10 @@
+APP_NAME=pap
+APP_DOMAIN=cryptochromatic.net
+STATIC_PATH=pap/static
+API_PATH=pap/api
+FALLBACK_PATH=pap/fallback
+STATIC_ROOT=/var/www/html/pap/static
+APP_HOST=127.0.0.1
+APP_PORT=3000
+NGINX_CONIG=/etc/nginx/sites-enabled/cryptochromatic.net
+NGINX_SNIPPET=/etc/nginx/snippets/pap.conf

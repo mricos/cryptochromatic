@@ -1,0 +1,111 @@
+:root {
+    --container-size: 500px;
+    --block-width: calc(var(--container-size) / 2);
+    --block-height: calc(var(--container-size) / 2);
+    --padding: 10px;
+    --margin: 5px;
+    --border: 1px solid rgba(0, 0, 0, 0.2);
+    --body-bg-color: #f4f4f4;
+    --font-family: Arial, sans-serif;
+    --button-bg-color: #444;
+    --button-text-color: white;
+    --button-hover-bg-color: #555;
+}
+
+body {
+    margin: 0;
+    font-family: var(--font-family);
+    background-color: var(--body-bg-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+#container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: var(--container-size);
+    height: var(--container-size);
+    position: relative;
+}
+
+.nested-div {
+    width: var(--block-width);
+    height: var(--block-height);
+    border: var(--border);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: var(--padding);
+    margin: var(--margin);
+    background-color: transparent;
+    box-sizing: border-box;
+}
+
+.center-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: var(--button-bg-color);
+    color: var(--button-text-color);
+    text-decoration: none;
+    font-size: 16px;
+    border-radius: 8px;
+    text-align: center;
+    transition: background-color 0.3s;
+}
+
+.center-button:hover {
+    background-color: var(--button-hover-bg-color);
+}
+
+#debug-popup {
+    position: absolute;
+    top: 50px;
+    left: 50px;
+    background: #333;
+    color: white;
+    padding: 10px;
+    border-radius: 8px;
+    display: none;
+    z-index: 1000;
+    font-family: monospace;
+    max-width: 300px;
+}
+
+#debug-popup h2, #debug-popup h3 {
+    margin: 0;
+    padding: 5px 0;
+}
+
+#debug-popup label {
+    display: inline-block;
+    width: 120px;
+    text-align: right;
+    margin-right: 10px;
+}
+
+#debug-popup input {
+    background: #444;
+    color: white;
+    border: none;
+    padding: 5px;
+    border-radius: 4px;
+}
+
+#debug-popup button {
+    margin-top: 10px;
+    background: #444;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+#status-area {
+    margin-top: 10px;
+    color: lightgray;
+    font-size: 12px;
+}

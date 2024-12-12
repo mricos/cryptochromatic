@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width,
+      initial-scale=1.0">
+<title>Ep1: Creaiting-a-latent-space-of-ideas  </title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<h1>Heyimai</h1>
+<p>
+A podcast about stuff.
+</p>
+<h3>System Info</h3>
+<pre>
+/dev/vda1        29G   19G   11G  64% /
+/var/www/html/heyimai/latent-spaces/ep1
+</pre>
+<h2>Ep1: Creaiting-a-latent-space-of-ideas  </h2>
+<p>
+<ul>
+<li>Best link for audio is
+<a href="./audio.mp3"> ./audio.mp3</a>
+</li>
+<li>
+<a href=" https://notebooklm.google.com/notebook/3bb2cfad-fefb-4963-9a67-227d9730fa6b" target="_blank"> Ep1: Creaiting-a-latent-space-of-ideas  </a>
+</li>
+<li><a 
+  target="_blank"
+  href="https://notebooklm.google.com/notebook/3bb2cfad-fefb-4963-9a67-227d9730fa6b/audio"
+> Creaiting-a-latent-space-of-ideas audio</a>
+</li>
+</ul>
+<pre>
+<a href="./audio.wav">audio.wav</a>
+-rwxr-xr-x 1 www-data www-data 49M Nov 19 02:42 ./audio.wav
+Input #0, wav, from './audio.wav':
+  Duration: 00:17:34.84, bitrate: 384 kb/s
+    Stream #0:0: Audio: pcm_s16le ([1][0][0][0] / 0x0001), 24000 Hz, 1 channels, s16, 384 kb/s
+<a href="./audio.mp3">audio.mp3</a>
+<i>ffmpeg -i audio.wav -codec:a mp3 -b:a 192k audio.mp3</i>
+<i>ffprobe -hide_banner -i ./audio.mp3 </i>
+Input #0, mp3, from './audio.mp3':
+  Metadata:
+    encoder         : Lavf58.29.100
+  Duration: 00:17:34.90, start: 0.046042, bitrate: 160 kb/s
+    Stream #0:0: Audio: mp3, 24000 Hz, mono, fltp, 160 kb/s
+-rwxr-xr-x 1 www-data www-data 21M Nov 19 03:18 audio.mp3
+<a href="./audio.aac">audio.aac</a>
+<i>ffmpeg -i audio.wav -codec:a aac -b:a 192k audio.aac</i>
+<i>ffprobe -hide_banner -i ./audio.aac </i>
+[aac @ 0x557a696b9f00] Estimating duration from bitrate, this may be inaccurate
+Input #0, aac, from './audio.aac':
+  Duration: 00:16:10.14, bitrate: 129 kb/s
+    Stream #0:0: Audio: aac (LC), 24000 Hz, mono, fltp, 129 kb/s
+-rwxr-xr-x 1 www-data www-data 16M Nov 19 03:04 audio.aac
+</pre>
+</p>
+</body>

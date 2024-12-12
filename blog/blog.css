@@ -9,7 +9,11 @@ body{
   padding-left:5em;
 }
 
-menu, footer{
+menu, footer, header base {
+  target:"_self";
+
+}
+menu, footer {
   display:flex;
   justify-content: space-between;
   text-align:right;
@@ -22,7 +26,7 @@ menu, footer{
 }
 
 footer{
-	text-align:center;
+  text-align:center;
   margin:0;
 }
 
@@ -30,14 +34,21 @@ article{
   margin-bottom:3em;
 }
 
-.title{
+h2, h3, .title{
   font-size:24pt;
   color:darkorange;
+  font-weight:normal;
   margin-left:-1em;
 }
+
+h3{
+  font-size:20pt;
+  color:orange;
+}
+
 li{
-	line-height:1.5em;
-	margin-bottom:1em;
+  line-height:1.5em;
+  margin-bottom:1em;
 }
 a, a:hover{
   color:goldenrod;

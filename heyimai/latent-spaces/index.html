@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editable Nested Divs</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="container">
+        <div class="nested-div">
+            <div class="nested-div">
+                <div class="nested-div">
+                    <div class="nested-div">
+                        <div class="nested-div">
+                            <div class="nested-div">
+                                <div class="nested-div">
+                                    <div class="nested-div">
+                                        <a class="center-button" href="./ep1">Go to EP1</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="debug-popup">
+        <h2>Debug Panel</h2>
+        <form id="css-editor"></form>
+        <h3>Palette</h3>
+        <div id="palette-editor"></div>
+        <button type="button" id="save-settings">Save Locally</button>
+        <button type="button" id="reset-palette">Reset Palette</button>
+        <div id="status-area"></div>
+        <p>Shift + Double-click to toggle this panel.</p>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="animate-colors.js"></script>
+</body>
+</html>

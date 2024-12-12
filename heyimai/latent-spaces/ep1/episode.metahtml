@@ -1,0 +1,31 @@
+<h2>$(cat $vars/title) </h2>
+<p>
+<ul>
+<li>Best link for audio is
+<a href="./audio.mp3"> ./audio.mp3</a>
+</li>
+<li>
+<a href=" $(cat $vars/link )" target="_blank"> $( cat $vars/title ) </a>
+</li>
+<li><a 
+  target="_blank"
+  href="$(cat $vars/audio-link )"
+> $(cat $vars/audio-title )</a>
+</li>
+</ul>
+<pre>
+<a href="./audio.wav">audio.wav</a>
+$(ls -lh ./audio.wav)
+$(ffprobe -hide_banner -i ./audio.wav)
+<a href="./audio.mp3">audio.mp3</a>
+<i>ffmpeg -i audio.wav -codec:a mp3 -b:a 192k audio.mp3</i>
+<i>ffprobe -hide_banner -i ./audio.mp3 </i>
+$(ffprobe -hide_banner -i ./audio.mp3)
+$(ls -lh audio.mp3)
+<a href="./audio.aac">audio.aac</a>
+<i>ffmpeg -i audio.wav -codec:a aac -b:a 192k audio.aac</i>
+<i>ffprobe -hide_banner -i ./audio.aac </i>
+$(ffprobe -hide_banner -i ./audio.aac)
+$(ls -lh audio.aac)
+</pre>
+</p>
